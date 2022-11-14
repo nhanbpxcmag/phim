@@ -7,6 +7,28 @@ declare namespace App {
   // interface Error {}
   // interface Platform {}
 }
+type TTypeImageURL =
+  | "backdrop"
+  | "poster"
+  | "still"
+  | "profile"
+  | "profile_dienvien_movie"
+  | "profile_dienvien_avatar"
+  | "logo";
+type TTypeSizeImageURL =
+  | "original"
+  | "w300_and_h450_bestv2"
+  | "w138_and_h175_face"
+  | "w45"
+  | "w92"
+  | "w154"
+  | "w185"
+  | "w300"
+  | "w342"
+  | "w500"
+  | "h632"
+  | "w780"
+  | "w1280";
 type ResponseDataSuccess<T> = {
   data: T;
   status: "success";

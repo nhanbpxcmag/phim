@@ -19,13 +19,25 @@ export class PhimController {
   async find_phim_by_id(@Param('id') id: number) {
     return this.getPhimService.get_phim(id);
   }
+  @Get('/detail_linkstream/:id')
+  async find_phim_by_id_linkstream(@Param('id') id: number) {
+    return this.getPhimService.get_phim_id_linkstream(id);
+  }
   @Get('/home/movie')
   async get_phim_movie_home(@Query('num_page') num_page: number) {
-    return this.getPhimService.get_phim_movie_home(num_page);
+    return this.getPhimService.get_phim_movie_home();
   }
   @Get('/home/tv')
   async get_phim_tv_home(@Query('num_page') num_page: number) {
     return this.getPhimService.get_phim_tv_home(num_page);
+  }
+  @Get('/all/movie')
+  async get_phim_movie_all() {
+    return this.getPhimService.get_phim_movie_all();
+  }
+  @Get('/all/tv')
+  async get_phim_tv_all() {
+    return this.getPhimService.get_phim_tv_all();
   }
   @Post('/add')
   async add_phim(@Body() body: addPhimInput) {

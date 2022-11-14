@@ -76,15 +76,65 @@ export class GetPhimService {
     //   .getMany();
     return { phim, dienvien, theloai, linkstream };
   }
-  async get_phim_movie_home(num_page: number = 0) {
+  async get_phim_id_linkstream(id_phim: number) {
+    const linkstream = await this.phim_linkstreamRepository
+      .createQueryBuilder()
+      .where('id = :id', { id: id_phim })
+      .getRawOne();
+    console.log(linkstream);
+    if (!linkstream) {
+      throw new BadRequestException(
+        ERROR.PHIM.NOT_EXIST.msg,
+        ERROR.PHIM.NOT_EXIST.code,
+      );
+    }
     const phim = await this.phimRepository
       .createQueryBuilder('phim')
-      // .select('phim.')
-      .where('phim.tmdb_type = :tmdb_type', { tmdb_type: 'movie' })
-      .limit(20)
-      .offset(num_page)
+      .leftJoinAndSelect('phim.quocgia', 'quocgia')
+      .leftJoinAndSelect('phim.loaiphim', 'loaiphim')
+      .where('phim.id = :id', { id: linkstream.Phim_linkstream_phimId })
+      .getOne();
+    if (!phim) {
+      throw new BadRequestException(
+        ERROR.PHIM.NOT_EXIST.msg,
+        ERROR.PHIM.NOT_EXIST.code,
+      );
+    }
+    phim.background = getImageURL(phim.background, 'backdrop');
+    phim.avatar = getImageURL(phim.avatar, 'poster');
+    const dienvien = await this.phim_dienvienRepository
+      .createQueryBuilder('phim_dienvien')
+      .leftJoinAndSelect('phim_dienvien.dienvien', 'dienvien')
+      .where('phim_dienvien.phim = :id', { id: id_phim })
       .getMany();
-    return { phim };
+    dienvien.map((v, i) => {
+      dienvien[i].dienvien.profile_path = getImageURL(
+        dienvien[i].dienvien.profile_path,
+        'profile_dienvien_movie',
+      );
+    });
+    const theloai = await this.phim_theloaiRepository
+      .createQueryBuilder('phim_theloai')
+      .leftJoinAndSelect('phim_theloai.theloai', 'theloai')
+      .where('phim_theloai.phim = :id', { id: id_phim })
+      .getMany();
+
+    return { phim, dienvien, theloai, linkstream };
+  }
+  async get_phim_movie_home() {
+    const phim = await this.phimRepository
+      .createQueryBuilder('phim')
+      .leftJoinAndSelect(
+        Phim_linkstream,
+        'phim_linkstream',
+        'phim.id = phim_linkstream.phimId',
+      )
+      .where('phim.tmdb_type = :tmdb_type', { tmdb_type: 'movie' })
+      .andWhere('phim_linkstream.id IS NOT NULL')
+      // .select(['phim.id','phim.ten','phim.ten_en'])
+      .orderBy('phim.id', 'DESC')
+      .getRawMany();
+    return [...phim];
   }
   async get_phim_tv_home(num_page: number = 0) {
     const phim = await this.phimRepository
@@ -95,5 +145,28 @@ export class GetPhimService {
       .offset(num_page)
       .getMany();
     return { phim };
+  }
+  async get_phim_movie_all() {
+    const phim = await this.phimRepository
+      .createQueryBuilder('phim')
+      .leftJoinAndSelect(
+        Phim_linkstream,
+        'phim_linkstream',
+        'phim.id = phim_linkstream.phimId',
+      )
+      .where('phim.tmdb_type = :tmdb_type', { tmdb_type: 'movie' })
+      // .select(['phim.id','phim.ten','phim.ten_en'])
+      .orderBy('phim.id', 'DESC')
+      .getRawMany();
+    return [...phim];
+  }
+  async get_phim_tv_all() {
+    const phim = await this.phimRepository
+      .createQueryBuilder('phim')
+      // .select('phim.')
+
+      .where('phim.tmdb_type = :tmdb_type', { tmdb_type: 'tv' })
+      .getMany();
+    return [...phim];
   }
 }
