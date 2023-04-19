@@ -1,57 +1,57 @@
 <script>
-  import { api_add } from "$lib/api";
+  import { api_add_bd } from "$lib/api";
   import { page } from "$app/stores";
+  const static_url = "http://192.168.31.215:1993/static_bd/";
   /**
    * @type {string | undefined}
    */
-  let tmdb_id = undefined;
+  let link = static_url;
   /**
    * @type {string | undefined}
    */
-  let link = "http://192.168.31.215:1993/static/";
-  /**
-   * @type {string | undefined}
-   */
-  let link_sub = "http://192.168.31.215:1993/static/";
+  let link_sub = static_url;
+  let ten = '', avatar = '';
   async function add_phim() {
-    if (!tmdb_id) {
-      alert("Vui lòng nhập tmdb_id");
-      return;
-    }
-    const tmdb_id_num = parseInt(tmdb_id, 10);
-    if (isNaN(tmdb_id_num)) {
-      alert("tmdb_id: kiểu số" + tmdb_id);
-      return;
-    }
     if (!link) {
       alert("Vui lòng nhập link");
       return;
     }
-    if (!link_sub) {
-      alert("Vui lòng nhập link_sub");
-      return;
+    // @ts-ignore
+    const linkApi = await api_add_bd($page.url.hostname,ten,avatar, link, link_sub===static_url ? '':link_sub);
+    if(linkApi){
+      avatar = '';
+    ten=''
+    link = static_url;
+    link_sub = static_url;
     }
-    const linkApi = await api_add($page.url.hostname, tmdb_id_num, link, link_sub, "movie");
-    tmdb_id = undefined;
-    link = "http://192.168.31.215:1993/static/";
-    link_sub = "http://192.168.31.215:1993/static/";
+    
   }
 </script>
 
 <form class="w-full">
   <div class="grid gap-6 mb-6 md:grid-cols-1">
     <div>
-      <label for="tmdb_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">ID TMDB</label>
+      <label for="ten" class="block mb-2 text-sm font-medium text-gray-300 dark:text-gray-300">ten</label>
       <input
         type="text"
-        id="tmdb_id"
+        id="ten"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="ID TMDB"
-        bind:value={tmdb_id}
+        placeholder="Ten"
+        bind:value={ten}
       />
     </div>
     <div>
-      <label for="link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Link</label>
+      <label for="avatar" class="block mb-2 text-sm font-medium text-gray-300 dark:text-gray-300">avatar</label>
+      <input
+        type="text"
+        id="avatar"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="avatar"
+        bind:value={avatar}
+      />
+    </div>
+    <div>
+      <label for="link" class="block mb-2 text-sm font-medium text-gray-300 dark:text-gray-300">Link</label>
       <input
         type="text"
         id="link"
@@ -61,7 +61,7 @@
       />
     </div>
     <div>
-      <label for="link_sub" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">link_sub</label>
+      <label for="link_sub" class="block mb-2 text-sm font-medium text-gray-300 dark:text-gray-300">link_sub</label>
       <input
         type="text"
         id="link_sub"

@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
 </script>
 
-<div class="flex">
+<div class="flex w-screen">
   <div class="app-nav">
     <div class="flex justify-center h-11 mt-2">
       <!-- svelte-ignore a11y-missing-attribute -->
@@ -13,6 +13,12 @@
         <div class="nav-item" class:active={$page.url.pathname === "/admin/phim"}>
           <i class="ri-arrow-drop-right-line" />
           <p>Phim</p>
+        </div>
+      </a>
+      <a href="/admin/bd">
+        <div class="nav-item" class:active={$page.url.pathname === "/admin/bd"}>
+          <i class="ri-arrow-drop-right-line" />
+          <p>BD</p>
         </div>
       </a>
       <a href="/admin/tv">

@@ -508,9 +508,10 @@ export class PhimService {
   }
 
   async add_link_stream(input: addLinkstreamInput) {
-    const { id_phim_or_episode, link_stream, type } = input;
+    const { id_phim_or_episode, link_stream, type, link_sub } = input;
     const item_phim_linkstream = new Phim_linkstream();
     item_phim_linkstream.linkstream = link_stream;
+    item_phim_linkstream.link_sub = link_sub;
     if (type === 'movie') {
       const phim = await this.phimRepository.findOne({
         where: { id: id_phim_or_episode },
@@ -526,6 +527,7 @@ export class PhimService {
       });
       if (check_linkstream) {
         check_linkstream.linkstream = link_stream;
+        check_linkstream.link_sub = link_sub;
         this.phim_linkstreamRepository.save(check_linkstream);
       } else {
         item_phim_linkstream.phim = phim;
@@ -546,6 +548,7 @@ export class PhimService {
       });
       if (check_linkstream) {
         check_linkstream.linkstream = link_stream;
+        check_linkstream.link_sub = link_sub;
         this.phim_linkstreamRepository.save(check_linkstream);
       } else {
         item_phim_linkstream.phim_tv_season_episode = phim_episode;
@@ -569,6 +572,9 @@ export class PhimService {
       await queryRunner.manager.delete(Phim_dienvien, { phim: check_phim });
       await queryRunner.manager.delete(Phim_theloai, { phim: check_phim });
       await queryRunner.manager.delete(Phim_tuongtu, { phim: check_phim });
+      await queryRunner.manager.delete(Phim_tuongtu, {
+        phim_tuongtu: check_phim,
+      });
       //truong hop tv
       if (check_phim.tmdb_type === 'tv') {
         const phim_tv_seasons = await this.phim_seasonRepository

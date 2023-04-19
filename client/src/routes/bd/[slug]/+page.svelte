@@ -1,10 +1,8 @@
 <script lang="ts">
   import { IsIphone } from "$lib/utils";
-  import type { PageData } from "./$types";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import Plyr from "plyr";
-  import { Player, Video, DefaultUi } from "@vime/svelte";
-
+  import { onMount } from "svelte";
+  import type { PageData } from "./$types";
   export let eventsToEmit: any[] = [];
   export let options = { currentTrack: 0 };
   export let player = {};
@@ -15,7 +13,7 @@
 
   onMount(async () => {
     is_iphone = IsIphone(window);
-    if (!is_iphone) {
+    if (!is_iphone || is_iphone) {
       player = new Plyr(plyrDiv.firstChild, {
         captions: { active: true, language: "vi" },
         controls: [
@@ -35,6 +33,8 @@
           "airplay",
           "fullscreen",
         ],
+        fullscreen: { enabled: true, fallback: true, iosNative: true },
+        autoplay: true,
       });
       // eventsToEmit.forEach((event) => dispatchOnPlayerEvent(event));
     }
@@ -60,35 +60,9 @@
 
 <div class="container mx-auto">
   <div bind:this={plyrDiv}>
-    <video
-      bind:this={refVideo}
-      data-poster={data.data.data.phim.background}
-      playsinline
-      controls
-      crossorigin="anonymous"
-    >
-      <source src={data.data.data.linkstream.Phim_linkstream_linkstream} />
-      <track
-        default={true}
-        kind="captions"
-        src={data.data.data.linkstream.Phim_linkstream_link_sub}
-        srclang="vi"
-        label="Viet"
-      />
+    <video bind:this={refVideo} data-poster={data.data.data.avatar} playsinline controls crossorigin="anonymous">
+      <source src={data.data.data.linkstream} />
+      <track default={true} kind="captions" src={data.data.data.link_sub} srclang="vi" label="Viet" />
     </video>
   </div>
-  <!-- <Player theme="dark" style="--vm-player-theme: #e86c8b;">
-    <Video crossOrigin="anonymous" poster="https://media.vimejs.com/poster.png">
-      <source data-src={`http://192.168.31.215:1993/static2/Eternals.2021.mp4`} type="video/mp4" />
-      <track
-        default
-        kind="subtitles"
-        src={`${data.data.data.linkstream.Phim_linkstream_linkstream}`}
-        srclang="en"
-        label="English"
-      />
-    </Video>
-
-    <DefaultUi />
-  </Player> -->
 </div>

@@ -34,3 +34,15 @@ interface DataPhim_Movie {
   phim_linkstream_phim_tv_season_episodeId: number;
 }
 type ResponseDataSuccess_Phim_Movie = ResponseDataSuccess<DataPhim_Movie[]>;
+
+interface BD{
+  id:number;
+  ten: string;
+  avatar: string;
+  linkstream: string;
+
+  link_sub: string;
+}
+
+type ResponseDataSuccess_BD= ResponseDataSuccess<BD[]>;
+type ResponseDataSuccess_DETAIL_BD= ResponseDataSuccess<BD[]>;

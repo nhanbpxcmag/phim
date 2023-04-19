@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+video::cue {
+  font-size: 120%;
+  color: #e8d920;
+}
+/* video::-webkit-media-text-track-display {
+  font-size: 120%;
+  color: #e8d920;
+} */
+.plyr__caption {
+  font-size: 120%;
+  color: #e8d920;
+}

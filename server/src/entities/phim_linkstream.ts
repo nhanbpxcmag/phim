@@ -17,6 +17,9 @@ export class Phim_linkstream {
   @Column({ nullable: true })
   linkstream: string;
 
+  @Column({ nullable: true })
+  link_sub: string;
+
   @OneToOne(() => Phim, { nullable: true })
   @JoinColumn({ name: 'phimId' })
   phim: Phim;

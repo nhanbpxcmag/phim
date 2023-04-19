@@ -62,4 +62,8 @@ export class addLinkstreamInput {
   @IsNotEmpty()
   @IsString()
   link_stream: string;
+
+  @IsNotEmpty()
+  @IsString()
+  link_sub: string;
 }

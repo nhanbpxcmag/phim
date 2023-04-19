@@ -2,9 +2,12 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { ThongtinModule } from './app/thongtin/thongtin.module';
 import { ValidationPipe } from './pipes/validation.pipe';
 import { PhimModule } from './app/phim/phim.module';
+import { BDModule } from './app/bd/bd.module';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { PhimModule } from './app/phim/phim.module';
       logging: process.env.NODE_ENV === 'dev',
     }),
     ThongtinModule,
-    PhimModule,
+    PhimModule,BDModule
   ],
   controllers: [],
   providers: [

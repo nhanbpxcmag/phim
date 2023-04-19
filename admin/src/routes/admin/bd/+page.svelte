@@ -2,17 +2,17 @@
   // @ts-nocheck
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { api_delete_movie, api_get_all_movie, api_get_movie } from "$lib/api";
+  import { api_delete_bd, api_get_all_bd } from "$lib/api";
   import { onMount } from "svelte";
   let data = [];
   let search = undefined;
   async function get_data() {
     data = [];
-    const linkApi = await api_get_all_movie($page.url.hostname);
+    const linkApi = await api_get_all_bd($page.url.hostname);
     data = linkApi?.data.data;
   }
   async function delete_phim(id) {
-    await api_delete_movie($page.url.hostname, id);
+    await api_delete_bd($page.url.hostname, id);
     get_data();
   }
   onMount(async () => {
@@ -22,8 +22,7 @@
     ? data.filter((v) => {
         const search_string = search.toUpperCase();
         return (
-          v.phim_ten.toUpperCase().match(`${search_string}.*`) ||
-          v.phim_ten_en.toUpperCase().match(`${search_string}.*`)
+          v.phim_ten.toUpperCase().match(`${search_string}.*`)
         );
       })
     : data;
@@ -32,12 +31,12 @@
 {#if data.length === 0}
   <p>...waiting</p>
 {:else if data}
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full content">
     <button
       type="button"
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-20"
       on:click={() => {
-        goto("/admin/phim/add");
+        goto("/admin/bd/add");
       }}
       >Thêm
     </button>
@@ -49,13 +48,11 @@
       bind:value={search}
     />
 
-    <table class="styled-table">
+    <table class="styled-table break-words" >
       <thead>
         <tr>
           <th style="width: 5%">ID</th>
           <th style="width: 25%">Tên</th>
-          <th style="width: 20%">Tên_En</th>
-          <th style="width: 5%">TMDB</th>
           <th style="width: 20%">Link</th>
           <th style="width: 20%">link_sub</th>
           <th style="width: 15%">Created at</th>
@@ -65,19 +62,17 @@
       <tbody>
         {#each visibleData as item}
           <tr>
-            <td>{item.phim_id}</td>
-            <td class="break-words break-all">{item.phim_ten}</td>
-            <td class="break-words break-all">{item.phim_ten_en}</td>
-            <td class="break-words break-all">{item.phim_tmdb_id}</td>
-            <td class="break-words break-all">{item.phim_linkstream_linkstream}</td>
-            <td class="break-words break-all">{item.phim_linkstream_link_sub}</td>
-            <td class="break-words break-all">{item.phim_created_at}</td>
+            <td>{item.id}</td>
+            <td class="break-words break-all">{item.ten}</td>
+            <td class="break-words break-all">{item.linkstream}</td>
+            <td class="break-words break-all">{item.link_sub}</td>
+            <td class="break-words break-all">{item.updated_at}</td>
             <td
               ><button
                 type="button"
                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 on:click={() => {
-                  delete_phim(item.phim_id);
+                  delete_phim(item.id);
                 }}
                 >Delete
               </button></td
@@ -88,3 +83,11 @@
     </table>
   </div>
 {/if}
+
+<style>
+  .content{
+    word-wrap: break-word;      /* IE 5.5-7 */
+      white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+      white-space: pre-wrap;  
+  }
+</style>

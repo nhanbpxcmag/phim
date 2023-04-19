@@ -73,6 +73,16 @@ export const ERROR = {
       msg: 'Lỗi insert phim - thể loại',
     },
   },
+  BD: {
+    ERROR_INSERT: {
+      code: 'BD_ERROR_INSERT',
+      msg: 'Lỗi insert',
+    },
+    NOT_EXIST: {
+      code: 'NOT_EXIST_BD',
+      msg: ' không tồn tại',
+    },
+  },
   TMDB: {
     ERROR_MOVIE_TV: {
       code: 'TMDB_ERROR_MOVIE_TV',
