@@ -2,17 +2,17 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
 const fs = require("fs");
-
+const path = 'D:/phim/'
 
 app.use(cors())
-app.use('/static', express.static('/mnt/sdb/phim'))
-app.use('/static_bd', express.static('/mnt/sdb/bongda'))
+app.use('/static', express.static(path))
+app.use('/static_bd', express.static(path+'bongda'))
 app.get('/static1/:id', (req, res) => {
-  res.sendFile('/mnt/sdb/phim'+req.params.id)
+  res.sendFile(path+req.params.id)
 })
 app.get("/static2/:id", function (req, res) {
     const range = req.headers.range;
-    const path = '/mnt/sdb/phim/'+req.params.id;
+    // const path = '/mnt/sdb/phim/'+req.params.id;
     if (!range) {
         res.status(400).send("Requires Range header");
     }

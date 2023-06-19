@@ -1,7 +1,7 @@
 <script>
   import { api_add_bd } from "$lib/api";
   import { page } from "$app/stores";
-  const static_url = "http://192.168.31.215:1993/static_bd/";
+  const static_url = "http://192.168.31.222:1993/static_bd/";
   /**
    * @type {string | undefined}
    */

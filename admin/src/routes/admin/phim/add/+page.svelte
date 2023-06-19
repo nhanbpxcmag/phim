@@ -8,11 +8,11 @@
   /**
    * @type {string | undefined}
    */
-  let link = "http://192.168.31.215:1993/static/";
+  let link = "http://192.168.31.222:1993/static/";
   /**
    * @type {string | undefined}
    */
-  let link_sub = "http://192.168.31.215:1993/static/";
+  let link_sub = "http://192.168.31.222:1993/static/";
   async function add_phim() {
     if (!tmdb_id) {
       alert("Vui lòng nhập tmdb_id");
