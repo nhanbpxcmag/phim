@@ -3,7 +3,10 @@
 @tailwind utilities;
 video::cue {
   font-size: 120%;
-  color: #e8d920;
+  /* color: #e8d920; */
+  color: #fff;
+  background: transparent;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 /* video::-webkit-media-text-track-display {
   font-size: 120%;
@@ -11,5 +14,7 @@ video::cue {
 } */
 .plyr__caption {
   font-size: 120%;
-  color: #e8d920;
+  color: #fff;
+  background: transparent;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
