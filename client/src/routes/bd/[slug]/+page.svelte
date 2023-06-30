@@ -2,6 +2,7 @@
   import { IsIphone } from "$lib/utils";
   import Plyr from "plyr";
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
   import type { PageData } from "./$types";
   export let eventsToEmit: any[] = [];
   export let options = { currentTrack: 0 };
@@ -50,11 +51,11 @@
   });
   function timeupdate() {
     if (window) {
-      window.localStorage.setItem(`${data.data.data.id}:timebd`, refVideo.currentTime);
+      window.localStorage.setItem(`${$page.params.slug}:timebd`, refVideo.currentTime);
     }
   }
   function loadedmetadata() {
-    refVideo.currentTime = window.localStorage.getItem(`${data.data.data.id}:timebd`) || 0;
+    refVideo.currentTime = window.localStorage.getItem(`${$page.params.slug}:timebd`) || 0;
   }
 </script>
 
