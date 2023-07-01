@@ -2,11 +2,22 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
 const fs = require("fs");
+const path_ = require("path");
+var srt2vtt = require('srt-to-vtt')
 const path = 'D:/phim/'
 
 app.use(cors())
-app.use('/static', express.static(path))
-app.use('/static_bd', express.static(path+'bongda'))
+// app.use('/static', express.static(path))
+app.use('/static/:id', async function (req, res) {
+  const file_name = req.params.id;
+  const path_file = await srtTovtt(file_name);
+  res.sendFile(path_file);
+})
+app.use('/static_bd', async function (req, res) {
+  const file_name = req.params.id;
+  const path_file = await srtTovtt(file_name,path+'bongda');
+  res.sendFile(path_file);
+})
 app.get('/static1/:id', (req, res) => {
   res.sendFile(path+req.params.id)
 })
@@ -36,3 +47,23 @@ app.get("/static2/:id", function (req, res) {
 app.listen(1993, function () {
   console.log('CORS-enabled web server listening on port 1993')
 })
+async function srtTovtt(file_name,path_root = path){
+  const arr_file = file_name.split('.');
+  const ex_file = arr_file.pop();
+  const name = arr_file.join('.');
+  let path_file = path_.join(path_root, file_name);  
+  if(ex_file === 'srt'){    
+    let vtt = path_.join(path_root, name + '.vtt');
+   await createTheFile(path_file,vtt)
+    path_file = vtt;
+  }
+  return path_file;
+}
+async function createTheFile(path_file,vtt) {
+  return new Promise(resolve => {
+      let b = fs.createReadStream(path_file)
+      .pipe(srt2vtt())
+      .pipe(fs.createWriteStream(vtt));
+      b.on('finish', resolve);
+  })
+  }

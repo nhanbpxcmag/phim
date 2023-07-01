@@ -9,22 +9,22 @@
   /**
    * @type {string | undefined}
    */
-  let link_sub = static_url;
-  let ten = '', avatar = '';
+  let link_sub = static_url + ".vtt";
+  let ten = "",
+    avatar = "";
   async function add_phim() {
     if (!link) {
       alert("Vui lòng nhập link");
       return;
     }
     // @ts-ignore
-    const linkApi = await api_add_bd($page.url.hostname,ten,avatar, link, link_sub===static_url ? '':link_sub);
-    if(linkApi){
-      avatar = '';
-    ten=''
-    link = static_url;
-    link_sub = static_url;
+    const linkApi = await api_add_bd($page.url.hostname, ten, avatar, link, link_sub === static_url ? "" : link_sub);
+    if (linkApi) {
+      avatar = "";
+      ten = "";
+      link = static_url;
+      link_sub = static_url;
     }
-    
   }
 </script>
 
