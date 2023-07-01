@@ -12,7 +12,7 @@
   /**
    * @type {string | undefined}
    */
-  let link_sub = "http://192.168.31.222:1993/static/.vtt";
+  let link_sub = "http://192.168.31.222:1993/static/";
   async function add_phim() {
     if (!tmdb_id) {
       alert("Vui lòng nhập tmdb_id");

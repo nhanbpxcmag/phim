@@ -9,7 +9,7 @@
   /**
    * @type {string | undefined}
    */
-  let link_sub = static_url + ".vtt";
+  let link_sub = static_url + "";
   let ten = "",
     avatar = "";
   async function add_phim() {

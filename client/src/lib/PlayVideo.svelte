@@ -14,6 +14,10 @@
   let refVideo: any;
   let plyrDiv: any;
   let is_iphone = false;
+  let home = "/";
+  $: {
+    home = $page.route.id === "/phim/[slug]" || $page.route.id === "/" ? "/" : "/bd";
+  }
   onMount(async () => {
     is_iphone = IsIphone(window);
     if (!is_iphone) {
@@ -64,6 +68,11 @@
   }
 </script>
 
+<a
+  href={home}
+  class="fixed top-[50vh] left-5 rounded-full bg-slate-200 text-slate-800 h-10 w-10 flex justify-center content-center text-center items-center font-bold"
+  >Back</a
+>
 <div class="container mx-auto">
   <div bind:this={plyrDiv}>
     <video
