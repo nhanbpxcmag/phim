@@ -11,12 +11,20 @@ app.use(cors())
 app.use('/static/:id', async function (req, res) {
   const file_name = req.params.id;
   const path_file = await srtTovtt(file_name);
-  res.sendFile(path_file);
+  if(path_file){
+    res.sendFile(path_file);
+  }
+  else
+  res.send("")
 })
-app.use('/static_bd', async function (req, res) {
+app.use('/static_bd/:id', async function (req, res) {
   const file_name = req.params.id;
   const path_file = await srtTovtt(file_name,path+'bongda');
-  res.sendFile(path_file);
+  if(path_file){
+    res.sendFile(path_file);
+  }
+  else
+  res.send("")
 })
 app.get('/static1/:id', (req, res) => {
   res.sendFile(path+req.params.id)
@@ -48,6 +56,7 @@ app.listen(1993, function () {
   console.log('CORS-enabled web server listening on port 1993')
 })
 async function srtTovtt(file_name,path_root = path){
+  if(!file_name) return null;
   const arr_file = file_name.split('.');
   const ex_file = arr_file.pop();
   const name = arr_file.join('.');
@@ -56,6 +65,12 @@ async function srtTovtt(file_name,path_root = path){
     let vtt = path_.join(path_root, name + '.vtt');
    await createTheFile(path_file,vtt)
     path_file = vtt;
+  }
+  if(path_file){
+    console.log(fs.existsSync(path_file))
+    if (!fs.existsSync(path_file)) {
+      return null;
+  }
   }
   return path_file;
 }

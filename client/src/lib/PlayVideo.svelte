@@ -73,37 +73,39 @@
   class="fixed top-[50vh] left-5 rounded-full bg-slate-200 text-slate-800 h-10 w-10 flex justify-center content-center text-center items-center font-bold"
   >Back</a
 >
-<div class="container mx-auto">
-  <div bind:this={plyrDiv}>
-    <video
-      bind:this={refVideo}
-      on:canplay={() => {
-        if (!has_set && refVideo?.currentTime) {
-          loadedmetadata();
-        }
-        has_set = true;
-      }}
-      data-poster={poster}
-      playsinline
-      controls
-      crossorigin="anonymous"
-    >
-      <source src={source} />
-      <track default={true} kind="captions" src={track} srclang="vi" label="Viet" />
-    </video>
+<div class="mt-[10vh]">
+  <div class="container mx-auto">
+    <div bind:this={plyrDiv}>
+      <video
+        bind:this={refVideo}
+        on:canplay={() => {
+          if (!has_set && refVideo?.currentTime) {
+            loadedmetadata();
+          }
+          has_set = true;
+        }}
+        data-poster={poster}
+        playsinline
+        controls
+        crossorigin="anonymous"
+      >
+        <source src={source} />
+        <track default={true} kind="captions" src={track} srclang="vi" label="Viet" />
+      </video>
+    </div>
+    <!-- <Player theme="dark" style="--vm-player-theme: #e86c8b;">
+        <Video crossOrigin="anonymous" poster="https://media.vimejs.com/poster.png">
+          <source data-src={`http://192.168.31.215:1993/static2/Eternals.2021.mp4`} type="video/mp4" />
+          <track
+            default
+            kind="subtitles"
+            src={`${data.data.data.linkstream.Phim_linkstream_linkstream}`}
+            srclang="en"
+            label="English"
+          />
+        </Video>
+    
+        <DefaultUi />
+      </Player> -->
   </div>
-  <!-- <Player theme="dark" style="--vm-player-theme: #e86c8b;">
-      <Video crossOrigin="anonymous" poster="https://media.vimejs.com/poster.png">
-        <source data-src={`http://192.168.31.215:1993/static2/Eternals.2021.mp4`} type="video/mp4" />
-        <track
-          default
-          kind="subtitles"
-          src={`${data.data.data.linkstream.Phim_linkstream_linkstream}`}
-          srclang="en"
-          label="English"
-        />
-      </Video>
-  
-      <DefaultUi />
-    </Player> -->
 </div>
