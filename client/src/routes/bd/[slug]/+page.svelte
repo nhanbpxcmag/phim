@@ -10,4 +10,5 @@
   poster={data.data.data.avatar}
   source={data.data.data.linkstream}
   track={data.data.data.link_sub}
+  ten={data.data.data.ten}
 />

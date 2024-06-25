@@ -7,9 +7,9 @@
   }
 </script>
 
-<div class="flex flex-col">
-  <div class="header flex content-center items-center">
-    <div class="flex justify-center h-11 mt-2 w-56">
+<div class="flex flex-col h-screen">
+  <div class="flex items-center content-center header h-[52px]">
+    <div class="flex justify-center w-56 mt-2 h-11">
       <!-- svelte-ignore a11y-missing-attribute -->
       <a href={home}><img class="object-contain" src="/logo_chu.png" /></a>
     </div>
